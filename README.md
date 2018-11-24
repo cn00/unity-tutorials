@@ -1,4 +1,4 @@
-# Object Management 02: Object Variety
+# Object Management 03: Reusing Objects
 
 [This is the third tutorial in a series about Object Management.](https://catlikecoding.com/unity/tutorials/object-management/reusing-objects/) It adds the ability to destroy shapes, followed by a way to reuse them.
 
