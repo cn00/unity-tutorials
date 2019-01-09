@@ -17,7 +17,7 @@
 			#pragma vertex LitPassVertex
 			#pragma fragment LitPassFragment
 			
-			#include "MyRP/ShaderLibrary/Lit.hlsl"
+			#include "../ShaderLibrary/Lit.hlsl"
 			
 			ENDHLSL
 		}
