@@ -1,8 +1,8 @@
 ﻿#ifndef MYRP_LIT_INCLUDED
 #define MYRP_LIT_INCLUDED
 
-#include "CoreRP/ShaderLibrary/Common.hlsl"
-#include "CoreRP/ShaderLibrary/Shadow/ShadowSamplingTent.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Shadow/ShadowSamplingTent.hlsl"
 
 CBUFFER_START(UnityPerFrame)
 	float4x4 unity_MatrixVP;
@@ -109,7 +109,7 @@ float3 DiffuseLight (
 
 #define UNITY_MATRIX_M unity_ObjectToWorld
 
-#include "CoreRP/ShaderLibrary/UnityInstancing.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 
 UNITY_INSTANCING_BUFFER_START(PerInstance)
 	UNITY_DEFINE_INSTANCED_PROP(float4, _Color)

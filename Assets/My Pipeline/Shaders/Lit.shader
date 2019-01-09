@@ -20,7 +20,7 @@
 			#pragma vertex LitPassVertex
 			#pragma fragment LitPassFragment
 			
-			#include "MyRP/ShaderLibrary/Lit.hlsl"
+			#include "../ShaderLibrary/Lit.hlsl"
 			
 			ENDHLSL
 		}
@@ -40,7 +40,7 @@
 			#pragma vertex ShadowCasterPassVertex
 			#pragma fragment ShadowCasterPassFragment
 			
-			#include "MyRP/ShaderLibrary/ShadowCaster.hlsl"
+			#include "../ShaderLibrary/ShadowCaster.hlsl"
 			
 			ENDHLSL
 		}

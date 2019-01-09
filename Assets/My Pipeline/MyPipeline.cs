@@ -7,6 +7,9 @@ public class MyPipeline : RenderPipeline {
 
 	const int maxVisibleLights = 16;
 
+	const string shadowsHardKeyword = "_SHADOWS_HARD";
+	const string shadowsSoftKeyword = "_SHADOWS_SOFT";
+
 	static int visibleLightColorsId =
 		Shader.PropertyToID("_VisibleLightColors");
 	static int visibleLightDirectionsOrPositionsId =
@@ -15,6 +18,8 @@ public class MyPipeline : RenderPipeline {
 		Shader.PropertyToID("_VisibleLightAttenuations");
 	static int visibleLightSpotDirectionsId =
 		Shader.PropertyToID("_VisibleLightSpotDirections");
+	static int lightIndicesOffsetAndCountID =
+		Shader.PropertyToID("unity_LightIndicesOffsetAndCount");
 	static int shadowMapId = Shader.PropertyToID("_ShadowMap");
 	static int worldToShadowMatricesId =
 		Shader.PropertyToID("_WorldToShadowMatrices");
@@ -83,13 +88,22 @@ public class MyPipeline : RenderPipeline {
 #endif
 
 		CullResults.Cull(ref cullingParameters, context, ref cull);
-		ConfigureLights();
-		if (shadowTileCount > 0) {
-			RenderShadows(context);
+		if (cull.visibleLights.Count > 0) {
+			ConfigureLights();
+			if (shadowTileCount > 0) {
+				RenderShadows(context);
+			}
+			else {
+				cameraBuffer.DisableShaderKeyword(shadowsHardKeyword);
+				cameraBuffer.DisableShaderKeyword(shadowsSoftKeyword);
+			}
 		}
 		else {
-			cameraBuffer.DisableShaderKeyword("_SHADOWS_HARD");
-			cameraBuffer.DisableShaderKeyword("_SHADOWS_SOFT");
+			cameraBuffer.SetGlobalVector(
+				lightIndicesOffsetAndCountID, Vector4.zero
+			);
+			cameraBuffer.DisableShaderKeyword(shadowsHardKeyword);
+			cameraBuffer.DisableShaderKeyword(shadowsSoftKeyword);
 		}
 
 		context.SetupCameraProperties(camera);
@@ -120,9 +134,12 @@ public class MyPipeline : RenderPipeline {
 		var drawSettings = new DrawRendererSettings(
 			camera, new ShaderPassName("SRPDefaultUnlit")
 		) {
-			flags = drawFlags,
-			rendererConfiguration = RendererConfiguration.PerObjectLightIndices8
+			flags = drawFlags
 		};
+		if (cull.visibleLights.Count > 0) {
+			drawSettings.rendererConfiguration =
+				RendererConfiguration.PerObjectLightIndices8;
+		}
 		drawSettings.sorting.flags = SortFlags.CommonOpaque;
 
 		var filterSettings = new FilterRenderersSettings(true) {
@@ -340,8 +357,8 @@ public class MyPipeline : RenderPipeline {
 				invShadowMapSize, invShadowMapSize, shadowMapSize, shadowMapSize
 			)
 		);
-		CoreUtils.SetKeyword(shadowBuffer, "_SHADOWS_HARD", hardShadows);
-		CoreUtils.SetKeyword(shadowBuffer, "_SHADOWS_SOFT", softShadows);
+		CoreUtils.SetKeyword(shadowBuffer, shadowsHardKeyword, hardShadows);
+		CoreUtils.SetKeyword(shadowBuffer, shadowsSoftKeyword, softShadows);
 		shadowBuffer.EndSample("Render Shadows");
 		context.ExecuteCommandBuffer(shadowBuffer);
 		shadowBuffer.Clear();

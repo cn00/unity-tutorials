@@ -17,7 +17,7 @@
 			#pragma vertex UnlitPassVertex
 			#pragma fragment UnlitPassFragment
 			
-			#include "MyRP/ShaderLibrary/Unlit.hlsl"
+			#include "../ShaderLibrary/Unlit.hlsl"
 			
 			ENDHLSL
 		}
