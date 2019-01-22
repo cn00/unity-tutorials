@@ -1,4 +1,4 @@
-# Object Management 08: More Factories
+# Object Management 09: Shape Behavior
 
 [This is the ninth tutorial in a series about Object Management.](https://catlikecoding.com/unity/tutorials/object-management/shape-behavior/) It adds support for modular behavior to shapes.
 
