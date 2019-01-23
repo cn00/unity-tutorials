@@ -56,6 +56,7 @@ public class MyPipeline : RenderPipeline {
 	public MyPipeline (
 		bool dynamicBatching, bool instancing, int shadowMapSize
 	) {
+		GraphicsSettings.lightsUseLinearIntensity = true;
 		if (dynamicBatching) {
 			drawFlags = DrawRendererFlags.EnableDynamicBatching;
 		}
