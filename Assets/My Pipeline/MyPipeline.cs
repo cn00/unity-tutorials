@@ -81,7 +81,7 @@ public class MyPipeline : RenderPipeline {
 		if (!CullResults.GetCullingParameters(camera, out cullingParameters)) {
 			return;
 		}
-		cullingParameters.shadowDistance = 20f;
+
 #if UNITY_EDITOR
 		if (camera.cameraType == CameraType.SceneView) {
 			ScriptableRenderContext.EmitWorldGeometryForSceneView(camera);
