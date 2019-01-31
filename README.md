@@ -1,4 +1,4 @@
-# Scriptable Render Pipeline 03: Lights
+# Scriptable Render Pipeline 04: Spotlight Shadows
 
 [This is the fourth installment of a tutorial series covering Unity's scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/spotlight-shadows/) In it, we'll add support for up to sixteen spotlights with shadows.
 
