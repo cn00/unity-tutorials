@@ -1,6 +1,6 @@
 # Scriptable Render Pipeline 05: Directional Shadows
 
-[This is the fifth installment of a tutorial series covering Unity's scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/spotlight-shadows/) This time we'll add support for directional shadows.
+[This is the fifth installment of a tutorial series covering Unity's scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/directional-shadows/) This time we'll add support for directional shadows.
 
 ## License
 
