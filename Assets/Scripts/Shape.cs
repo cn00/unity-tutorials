@@ -84,6 +84,7 @@ public class Shape : PersistableObject {
 		Age += Time.deltaTime;
 		for (int i = 0; i < behaviorList.Count; i++) {
 			if (!behaviorList[i].GameUpdate(this)) {
+				behaviorList[i].Recycle();
 				behaviorList.RemoveAt(i--);
 			}
 		}
