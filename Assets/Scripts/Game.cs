@@ -216,10 +216,6 @@ public class Game : PersistableObject {
 
 	void KillImmediately (Shape shape) {
 		int index = shape.SaveIndex;
-		if (index < 0) {
-			return;
-		}
-		shape.SaveIndex = -1;
 		shape.Recycle();
 
 		if (index < dyingShapeCount && index < --dyingShapeCount) {
