@@ -1,6 +1,6 @@
 # Object Management 12: More Complex Levels
 
-[This is the twelfth and final tutorial in a series about Object Management.](https://catlikecoding.com/unity/tutorials/object-management/satellites/) It covers the addition of kill zones and more strict management of level objects.
+[This is the twelfth and final tutorial in a series about Object Management.](https://catlikecoding.com/unity/tutorials/object-management/more-complex-levels/) It covers the addition of kill zones and more strict management of level objects.
 
 ## License
 
