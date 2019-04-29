@@ -1,6 +1,6 @@
 # Scriptable Render Pipeline 08: Global Illumination
 
-[This is the eight installment of a tutorial series covering Unity's scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/global illumination/) It's about supporting both static and dynamic global illumination.
+[This is the eight installment of a tutorial series covering Unity's scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/global-illumination/) It's about supporting both static and dynamic global illumination.
 
 ## License
 
