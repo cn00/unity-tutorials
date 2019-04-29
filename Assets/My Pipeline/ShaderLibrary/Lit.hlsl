@@ -102,7 +102,7 @@ float3 SampleEnvironment (LitSurface s) {
 			unity_SpecCube1, samplerunity_SpecCube0, uvw, mip
 		);
 		color = lerp(
-			sample.rgb, DecodeHDREnvironment(sample, unity_SpecCube1_HDR), blend
+			DecodeHDREnvironment(sample, unity_SpecCube1_HDR), color, blend
 		);
 	}
 	return color;
