@@ -83,6 +83,18 @@ SAMPLER(samplerunity_Lightmap);
 TEXTURE2D(unity_DynamicLightmap);
 SAMPLER(samplerunity_DynamicLightmap);
 
+#define UNITY_MATRIX_M unity_ObjectToWorld
+#define UNITY_MATRIX_I_M unity_WorldToObject
+
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
+
+UNITY_INSTANCING_BUFFER_START(PerInstance)
+	UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
+	UNITY_DEFINE_INSTANCED_PROP(float, _Metallic)
+	UNITY_DEFINE_INSTANCED_PROP(float, _Smoothness)
+	UNITY_DEFINE_INSTANCED_PROP(float4, _EmissionColor)
+UNITY_INSTANCING_BUFFER_END(PerInstance)
+
 float3 BoxProjection (
 	float3 direction, float3 position,
 	float4 cubemapPosition, float4 boxMin, float4 boxMax
@@ -313,18 +325,6 @@ float3 GenericLight (
 	color *= shadowAttenuation * spotFade * rangeFade / distanceSqr;
 	return color * lightColor;
 }
-
-#define UNITY_MATRIX_M unity_ObjectToWorld
-#define UNITY_MATRIX_I_M unity_WorldToObject
-
-#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-
-UNITY_INSTANCING_BUFFER_START(PerInstance)
-	UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
-	UNITY_DEFINE_INSTANCED_PROP(float, _Metallic)
-	UNITY_DEFINE_INSTANCED_PROP(float, _Smoothness)
-	UNITY_DEFINE_INSTANCED_PROP(float4, _EmissionColor)
-UNITY_INSTANCING_BUFFER_END(PerInstance)
 
 struct VertexInput {
 	float4 pos : POSITION;
