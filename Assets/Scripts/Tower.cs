@@ -71,7 +71,7 @@ public class Tower : GameTileContent {
 		Vector3 b = target.Position;
 		float x = a.x - b.x;
 		float z = a.z - b.z;
-		float r = targetingRange + 0.5f;
+		float r = targetingRange + 0.25f * target.Enemy.Scale;
 		if (x * x + z * z > r * r) {
 			target = null;
 			return false;

@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
+	public float Scale { get; private set; }
+
 	float Health { get; set; }
 
 	public void ApplyDamage (float damage) {
@@ -61,6 +63,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void Initialize (float scale, float speed, float pathOffset) {
+		Scale = scale;
 		model.localScale = new Vector3(scale, scale, scale);
 		this.speed = speed;
 		this.pathOffset = pathOffset;
