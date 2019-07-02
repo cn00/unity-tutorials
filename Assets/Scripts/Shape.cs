@@ -183,13 +183,13 @@ public class Shape : PersistableObject {
 		for (; i < max; i++) {
 			SetColor(reader.ReadColor(), i);
 		}
-		if (count > max) {
+		if (count > colors.Length) {
 			for (; i < count; i++) {
 				reader.ReadColor();
 			}
 		}
-		else if (count < max) {
-			for (; i < max; i++) {
+		else if (count < colors.Length) {
+			for (; i < colors.Length; i++) {
 				SetColor(Color.white, i);
 			}
 		}
