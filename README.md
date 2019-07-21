@@ -1,4 +1,4 @@
-# Tower Defense 03: Towers
+# Tower Defense 04: Ballistics
 
 [This is the fourth installment of a tutorial series about creating a simple tower defense game.](https://catlikecoding.com/unity/tutorials/tower-defense/ballistics/) It adds a mortar tower that launches shells that detonate on impact.
 
