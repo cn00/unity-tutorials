@@ -508,8 +508,8 @@ void LODCrossFadeClip (float4 screenPos) {
 }
 
 float4 LitPassFragment (
-	float4 screenPos : VPOS,
-	VertexOutput input, FRONT_FACE_TYPE isFrontFace : FRONT_FACE_SEMANTIC
+	VertexOutput input, float4 screenPos : VPOS,
+	FRONT_FACE_TYPE isFrontFace : FRONT_FACE_SEMANTIC
 ) : SV_TARGET {
 	UNITY_SETUP_INSTANCE_ID(input);
 	
