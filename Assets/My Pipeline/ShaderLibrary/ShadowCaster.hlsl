@@ -43,35 +43,34 @@ struct VertexInput {
 };
 
 struct VertexOutput {
+	float4 clipPos : SV_POSITION;
 	float2 uv : TEXCOORD0;
 	UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-VertexOutput ShadowCasterPassVertex (
-	VertexInput input, out float4 clipPos : SV_POSITION
-) {
+VertexOutput ShadowCasterPassVertex (VertexInput input) {
 	VertexOutput output;
 	UNITY_SETUP_INSTANCE_ID(input);
 	UNITY_TRANSFER_INSTANCE_ID(input, output);
 	float4 worldPos = mul(UNITY_MATRIX_M, float4(input.pos.xyz, 1.0));
-	clipPos = mul(unity_MatrixVP, worldPos);
+	output.clipPos = mul(unity_MatrixVP, worldPos);
 	
 	#if UNITY_REVERSED_Z
-		clipPos.z -= _ShadowBias;
-		clipPos.z =
-			min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
+		output.clipPos.z -= _ShadowBias;
+		output.clipPos.z =
+			min(output.clipPos.z, output.clipPos.w * UNITY_NEAR_CLIP_VALUE);
 	#else
-		clipPos.z += _ShadowBias;
-		clipPos.z =
-			max(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
+		output.clipPos.z += _ShadowBias;
+		output.clipPos.z =
+			max(output.clipPos.z, output.clipPos.w * UNITY_NEAR_CLIP_VALUE);
 	#endif
 	
 	output.uv = TRANSFORM_TEX(input.uv, _MainTex);
 	return output;
 }
 
-void LODCrossFadeClip (float4 screenPos) {
-	float2 ditherUV = TRANSFORM_TEX(screenPos.xy, _DitherTexture);
+void LODCrossFadeClip (float4 clipPos) {
+	float2 ditherUV = TRANSFORM_TEX(clipPos.xy, _DitherTexture);
 	float lodClipBias =
 		SAMPLE_TEXTURE2D(_DitherTexture, sampler_DitherTexture, ditherUV).a;
 	if (unity_LODFade.x < 0.5) {
@@ -80,13 +79,11 @@ void LODCrossFadeClip (float4 screenPos) {
 	clip(unity_LODFade.x - lodClipBias);
 }
 
-float4 ShadowCasterPassFragment (
-	float4 screenPos : VPOS, VertexOutput input
-) : SV_TARGET {
+float4 ShadowCasterPassFragment (VertexOutput input) : SV_TARGET {
 	UNITY_SETUP_INSTANCE_ID(input);
 	
 	#if defined(LOD_FADE_CROSSFADE)
-		LODCrossFadeClip(screenPos);
+		LODCrossFadeClip(input.clipPos);
 	#endif
 	
 	#if !defined(_CLIPPING_OFF)

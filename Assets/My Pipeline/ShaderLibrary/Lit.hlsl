@@ -411,6 +411,7 @@ struct VertexInput {
 };
 
 struct VertexOutput {
+	float4 clipPos : SV_POSITION;
 	float3 normal : TEXCOORD0;
 	float3 worldPos : TEXCOORD1;
 	float3 vertexLighting : TEXCOORD2;
@@ -464,12 +465,12 @@ float4 BakedShadows (VertexOutput input, LitSurface surface) {
 	return 1.0;
 }
 
-VertexOutput LitPassVertex (VertexInput input, out float4 clipPos : SV_POSITION) {
+VertexOutput LitPassVertex (VertexInput input) {
 	VertexOutput output;
 	UNITY_SETUP_INSTANCE_ID(input);
 	UNITY_TRANSFER_INSTANCE_ID(input, output);
 	float4 worldPos = mul(UNITY_MATRIX_M, float4(input.pos.xyz, 1.0));
-	clipPos = mul(unity_MatrixVP, worldPos);
+	output.clipPos = mul(unity_MatrixVP, worldPos);
 	#if defined(UNITY_ASSUME_UNIFORM_SCALING)
 		output.normal = mul((float3x3)UNITY_MATRIX_M, input.normal);
 	#else
@@ -497,8 +498,8 @@ VertexOutput LitPassVertex (VertexInput input, out float4 clipPos : SV_POSITION)
 	return output;
 }
 
-void LODCrossFadeClip (float4 screenPos) {
-	float2 ditherUV = TRANSFORM_TEX(screenPos.xy, _DitherTexture);
+void LODCrossFadeClip (float4 clipPos) {
+	float2 ditherUV = TRANSFORM_TEX(clipPos.xy, _DitherTexture);
 	float lodClipBias =
 		SAMPLE_TEXTURE2D(_DitherTexture, sampler_DitherTexture, ditherUV).a;
 	if (unity_LODFade.x < 0.5) {
@@ -508,13 +509,12 @@ void LODCrossFadeClip (float4 screenPos) {
 }
 
 float4 LitPassFragment (
-	VertexOutput input, float4 screenPos : VPOS,
-	FRONT_FACE_TYPE isFrontFace : FRONT_FACE_SEMANTIC
+	VertexOutput input, FRONT_FACE_TYPE isFrontFace : FRONT_FACE_SEMANTIC
 ) : SV_TARGET {
 	UNITY_SETUP_INSTANCE_ID(input);
 	
 	#if defined(LOD_FADE_CROSSFADE)
-		LODCrossFadeClip(screenPos);
+		LODCrossFadeClip(input.clipPos);
 	#endif
 
 	input.normal = normalize(input.normal);
