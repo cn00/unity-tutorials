@@ -1,6 +1,6 @@
 # Movement 02: Physics
 
-[This is the second installment of a tutorial series about controlling the movement of a character.](https://catlikecoding.com/unity/tutorials/movement/sliding-a-sphere/) This time we'll use the physics engine to create more realistic motion and support more complex environments.
+[This is the second installment of a tutorial series about controlling the movement of a character.](https://catlikecoding.com/unity/tutorials/movement/physics/) This time we'll use the physics engine to create more realistic motion and support more complex environments.
 
 ## License
 
