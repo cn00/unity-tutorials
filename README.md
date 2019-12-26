@@ -1,4 +1,4 @@
-# Custom SRP 04: Directional Lights
+# Custom SRP 04: Directional Shadows
 
 [This is the fourth part of a tutorial series about creating a custom scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/custom-srp/directional-shadows/) It adds support for cascaded directional shadow maps.
 
