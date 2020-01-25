@@ -53,6 +53,7 @@ public class MovingSphere : MonoBehaviour {
 
 	void Awake () {
 		body = GetComponent<Rigidbody>();
+		OnValidate();
 	}
 
 	void Update () {
