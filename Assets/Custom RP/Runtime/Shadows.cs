@@ -167,8 +167,9 @@ public class Shadows {
 		int cascadeCount = settings.directional.cascadeCount;
 		int tileOffset = index * cascadeCount;
 		Vector3 ratios = settings.directional.CascadeRatios;
-		float cullingFactor = 1f - settings.directional.cascadeFade;
-		
+		float cullingFactor =
+            Mathf.Max(0f, 0.8f - settings.directional.cascadeFade);
+
 		for (int i = 0; i < cascadeCount; i++) {
 			cullingResults.ComputeDirectionalShadowMatricesAndCullingPrimitives(
 				light.visibleLightIndex, i, cascadeCount, ratios, tileSize,
