@@ -10,7 +10,10 @@ public class OrbitCamera : MonoBehaviour {
 	float distance = 5f;
 
 	[SerializeField, Min(0f)]
-	float responsiveness = 0f;
+	float focusRadius = 5f;
+
+	[SerializeField, Range(0f, 1f)]
+	float focusCentering = 0.5f;
 
 	[SerializeField, Range(1f, 360f)]
 	float rotationSpeed = 90f;
@@ -69,32 +72,47 @@ public class OrbitCamera : MonoBehaviour {
 		else {
 			lookRotation = transform.localRotation;
 		}
+
 		Vector3 lookDirection = lookRotation * Vector3.forward;
+		Vector3 lookPosition = focusPoint - lookDirection * distance;
 
-		float lookDistance;
+		Vector3 rectOffset = lookDirection * regularCamera.nearClipPlane;
+		Vector3 rectPosition = lookPosition + rectOffset;
+		Vector3 castFrom = focus.position;
+		Vector3 castLine = rectPosition - castFrom;
+		float castDistance = castLine.magnitude;
+		Vector3 castDirection = castLine / castDistance;
+
 		if (Physics.BoxCast(
-			focusPoint, CameraHalfExtends, -lookDirection, out RaycastHit hit,
-			lookRotation, distance - regularCamera.nearClipPlane, obstructionMask
+			castFrom, CameraHalfExtends, castDirection, out RaycastHit hit,
+			lookRotation, castDistance, obstructionMask
 		)) {
-			lookDistance = hit.distance + regularCamera.nearClipPlane;
+			rectPosition = castFrom + castDirection * hit.distance;
+			lookPosition = rectPosition - rectOffset;
 		}
-		else {
-			lookDistance = distance;
-		}
-
-		Vector3 lookPosition = focusPoint - lookDirection * lookDistance;
+		
 		transform.SetPositionAndRotation(lookPosition, lookRotation);
 	}
 
 	void UpdateFocusPoint () {
 		previousFocusPoint = focusPoint;
-		focusPoint = focus.position;
-		if (responsiveness > 0f) {
-			float distanceSqr = (focusPoint - previousFocusPoint).sqrMagnitude;
-			focusPoint = Vector3.Lerp(
-				previousFocusPoint, focusPoint,
-				distanceSqr * responsiveness * Time.unscaledDeltaTime
-			);
+		Vector3 targetPoint = focus.position;
+		if (focusRadius > 0f) {
+			float distance = Vector3.Distance(targetPoint, focusPoint);
+			if (distance > focusRadius) {
+				focusPoint = Vector3.Lerp(
+					targetPoint, focusPoint, focusRadius / distance
+				);
+			}
+			if (distance > 0.01f && focusCentering > 0f) {
+				focusPoint = Vector3.Lerp(
+					targetPoint, focusPoint,
+					Mathf.Pow(1f - focusCentering, Time.unscaledDeltaTime)
+				);
+			}
+		}
+		else {
+			focusPoint = targetPoint;
 		}
 	}
 

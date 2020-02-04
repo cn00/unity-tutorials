@@ -8298,7 +8298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focus: {fileID: 315004441}
   distance: 5
-  responsiveness: 0
+  focusRadius: 1
+  focusCentering: 0.75
   rotationSpeed: 90
   minVerticalAngle: -30
   maxVerticalAngle: 60
