@@ -1,4 +1,4 @@
-# Movement 05: Custom Gravity
+# Movement 06: Custom Gravity
 
 [This is the sixth installment of a tutorial series about controlling the movement of a character.](https://catlikecoding.com/unity/tutorials/movement/complex-gravity/) It extends our custom gravity by supporting multiple gravity sources, including planes, spheres, and boxes.
 
