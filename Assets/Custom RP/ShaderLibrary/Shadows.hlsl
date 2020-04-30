@@ -38,12 +38,13 @@ struct ShadowMask {
 };
 
 float GetBakedShadow (ShadowMask mask, int channel) {
+	float shadow = 1.0;
 	if (mask.always || mask.distance) {
 		if (channel >= 0) {
-			return mask.shadows[channel];
+			shadow = mask.shadows[channel];
 		}
 	}
-	return 1.0;
+	return shadow;
 }
 
 float GetBakedShadow (ShadowMask mask, int channel, float strength) {
@@ -137,8 +138,8 @@ float SampleDirectionalShadowAtlas (float3 positionSTS) {
 
 float FilterDirectionalShadow (float3 positionSTS) {
 	#if defined(DIRECTIONAL_FILTER_SETUP)
-		real weights[DIRECTIONAL_FILTER_SAMPLES];
-		real2 positions[DIRECTIONAL_FILTER_SAMPLES];
+		float weights[DIRECTIONAL_FILTER_SAMPLES];
+		float2 positions[DIRECTIONAL_FILTER_SAMPLES];
 		float4 size = _ShadowAtlasSize.yyxx;
 		DIRECTIONAL_FILTER_SETUP(size, positionSTS.xy, weights, positions);
 		float shadow = 0;
@@ -184,18 +185,20 @@ float GetDirectionalShadowAttenuation (
 		return 1.0;
 	#endif
 
+	float shadow;
 	if (directional.strength * global.strength <= 0.0) {
-		return GetBakedShadow(
+		shadow = GetBakedShadow(
 			global.shadowMask, directional.shadowMaskChannel,
 			abs(directional.strength)
 		);
 	}
-	
-	float shadow = GetCascadedShadow(directional, global, surfaceWS);
-	
-	return MixBakedAndRealtimeShadows(
-		global, shadow, directional.shadowMaskChannel, directional.strength
-	);
+	else {
+		shadow = GetCascadedShadow(directional, global, surfaceWS);
+		shadow = MixBakedAndRealtimeShadows(
+			global, shadow, directional.shadowMaskChannel, directional.strength
+		);
+	}
+	return shadow;
 }
 
 #endif
