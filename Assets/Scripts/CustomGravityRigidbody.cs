@@ -71,9 +71,7 @@ public class CustomGravityRigidbody : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if (
-			!body.IsSleeping() &&
-			(waterMask & (1 << other.gameObject.layer)) != 0) {
+		if ((waterMask & (1 << other.gameObject.layer)) != 0) {
 			EvaluateSubmergence();
 		}
 	}
@@ -81,7 +79,8 @@ public class CustomGravityRigidbody : MonoBehaviour {
 	void OnTriggerStay (Collider other) {
 		if (
 			!body.IsSleeping() &&
-			(waterMask & (1 << other.gameObject.layer)) != 0) {
+			(waterMask & (1 << other.gameObject.layer)) != 0
+		) {
 			EvaluateSubmergence();
 		}
 	}
