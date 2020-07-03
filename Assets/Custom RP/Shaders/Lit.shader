@@ -81,7 +81,6 @@
 			}
 
 			ColorMask 0
-			Cull Off
 			
 			HLSLPROGRAM
 			#pragma target 3.5

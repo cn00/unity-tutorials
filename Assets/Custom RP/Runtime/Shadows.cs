@@ -383,6 +383,10 @@ public class Shadows {
 				out Matrix4x4 viewMatrix, out Matrix4x4 projectionMatrix,
 				out ShadowSplitData splitData
 			);
+			viewMatrix.m11 = -viewMatrix.m11;
+			viewMatrix.m12 = -viewMatrix.m12;
+			viewMatrix.m13 = -viewMatrix.m13;
+
 			shadowSettings.splitData = splitData;
 			int tileIndex = index + i;
 			Vector2 offset = SetTileViewport(tileIndex, split, tileSize);
