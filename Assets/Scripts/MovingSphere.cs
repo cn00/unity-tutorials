@@ -126,7 +126,9 @@ public class MovingSphere : MonoBehaviour {
 		}
 		
 		if (connectedBody) {
-			UpdateConnectionState();
+			if (connectedBody.isKinematic || connectedBody.mass >= body.mass) {
+				UpdateConnectionState();
+			}
 		}
 	}
 
