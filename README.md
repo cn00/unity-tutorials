@@ -1,6 +1,6 @@
 # Custom SRP 11: Post Processing
 
-[This is the 1th part of a tutorial series about creating a custom scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/custom-srp/post-processing/) It adds support for post processing, initially only bloom.
+[This is the 11th part of a tutorial series about creating a custom scriptable render pipeline.](https://catlikecoding.com/unity/tutorials/custom-srp/post-processing/) It adds support for post processing, initially only bloom.
 
 ## License
 
