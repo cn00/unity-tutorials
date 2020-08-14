@@ -62,7 +62,7 @@ float4 BloomCombinePassFragment (Varyings input) : SV_TARGET {
 		lowRes = GetSource(input.fxUV).rgb;
 	}
 	float3 highRes = GetSource2(input.fxUV).rgb;
-	return float4(lowRes * _BloomIntensity + highRes, 0.0);
+	return float4(lowRes * _BloomIntensity + highRes, 1.0);
 }
 
 float4 BloomHorizontalPassFragment (Varyings input) : SV_TARGET {
@@ -78,7 +78,7 @@ float4 BloomHorizontalPassFragment (Varyings input) : SV_TARGET {
 		float offset = offsets[i] * 2.0 * GetSourceTexelSize().x;
 		color += GetSource(input.fxUV + float2(offset, 0.0)).rgb * weights[i];
 	}
-	return float4(color, 0.0);
+	return float4(color, 1.0);
 }
 
 float4 _BloomThreshold;
@@ -95,7 +95,7 @@ float3 ApplyBloomThreshold (float3 color) {
 
 float4 BloomPrefilterPassFragment (Varyings input) : SV_TARGET {
 	float3 color = ApplyBloomThreshold(GetSource(input.fxUV).rgb);
-	return float4(color, 0.0);
+	return float4(color, 1.0);
 }
 
 float4 BloomVerticalPassFragment (Varyings input) : SV_TARGET {
@@ -110,7 +110,7 @@ float4 BloomVerticalPassFragment (Varyings input) : SV_TARGET {
 		float offset = offsets[i] * GetSourceTexelSize().y;
 		color += GetSource(input.fxUV + float2(0.0, offset)).rgb * weights[i];
 	}
-	return float4(color, 0.0);
+	return float4(color, 1.0);
 }
 
 float4 CopyPassFragment (Varyings input) : SV_TARGET {
