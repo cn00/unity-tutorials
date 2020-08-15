@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public partial class PostFXStack {
 
-	enum Passes {
+	enum Pass {
 		BloomCombine,
 		BloomHorizontal,
 		BloomPrefilter,
@@ -69,7 +69,7 @@ public partial class PostFXStack {
 			bloom.maxIterations == 0 || bloom.intensity <= 0f ||
 			height < bloom.downscaleLimit * 2 || width < bloom.downscaleLimit * 2
 		) {
-			Draw(sourceId, BuiltinRenderTextureType.CameraTarget, Passes.Copy);
+			Draw(sourceId, BuiltinRenderTextureType.CameraTarget, Pass.Copy);
 			buffer.EndSample("Bloom");
 			return;
 		}
@@ -86,7 +86,7 @@ public partial class PostFXStack {
 		buffer.GetTemporaryRT(
 			bloomPrefilterId, width, height, 0, FilterMode.Bilinear, format
 		);
-		Draw(sourceId, bloomPrefilterId, Passes.BloomPrefilter);
+		Draw(sourceId, bloomPrefilterId, Pass.BloomPrefilter);
 		width /= 2;
 		height /= 2;
 
@@ -103,8 +103,8 @@ public partial class PostFXStack {
 			buffer.GetTemporaryRT(
 				toId, width, height, 0, FilterMode.Bilinear, format
 			);
-			Draw(fromId, midId, Passes.BloomHorizontal);
-			Draw(midId, toId, Passes.BloomVertical);
+			Draw(fromId, midId, Pass.BloomHorizontal);
+			Draw(midId, toId, Pass.BloomVertical);
 			fromId = toId;
 			toId += 2;
 			width /= 2;
@@ -121,7 +121,7 @@ public partial class PostFXStack {
 			toId -= 5;
 			for (i -= 1; i > 0; i--) {
 				buffer.SetGlobalTexture(fxSource2Id, toId + 1);
-				Draw(fromId, toId, Passes.BloomCombine);
+				Draw(fromId, toId, Pass.BloomCombine);
 				buffer.ReleaseTemporaryRT(fromId);
 				buffer.ReleaseTemporaryRT(toId + 1);
 				fromId = toId;
@@ -133,16 +133,13 @@ public partial class PostFXStack {
 		}
 		buffer.SetGlobalFloat(bloomIntensityId, bloom.intensity);
 		buffer.SetGlobalTexture(fxSource2Id, sourceId);
-		Draw(
-			fromId, BuiltinRenderTextureType.CameraTarget,
-			Passes.BloomCombine
-		);
+		Draw(fromId, BuiltinRenderTextureType.CameraTarget, Pass.BloomCombine);
 		buffer.ReleaseTemporaryRT(fromId);
 		buffer.EndSample("Bloom");
 	}
 
 	void Draw (
-		RenderTargetIdentifier from, RenderTargetIdentifier to, Passes pass
+		RenderTargetIdentifier from, RenderTargetIdentifier to, Pass pass
 	) {
 		buffer.SetGlobalTexture(fxSourceId, from);
 		buffer.SetRenderTarget(
