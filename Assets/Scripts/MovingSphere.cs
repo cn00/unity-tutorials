@@ -158,15 +158,15 @@ public class MovingSphere : MonoBehaviour {
 			velocity +=
 				gravity * ((1f - buoyancy * submergence) * Time.deltaTime);
 		}
-		else if (desiresClimbing && OnGround) {
-			velocity +=
-				(gravity - contactNormal * (maxClimbAcceleration * 0.9f)) *
-				Time.deltaTime;
-		}
 		else if (OnGround && velocity.sqrMagnitude < 0.01f) {
 			velocity +=
 				contactNormal *
 				(Vector3.Dot(gravity, contactNormal) * Time.deltaTime);
+		}
+		else if (desiresClimbing && OnGround) {
+			velocity +=
+				(gravity - contactNormal * (maxClimbAcceleration * 0.9f)) *
+				Time.deltaTime;
 		}
 		else {
 			velocity += gravity * Time.deltaTime;
