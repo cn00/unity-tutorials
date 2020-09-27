@@ -2,7 +2,7 @@
 using UnityEditor;
 
 [CustomEditorForRenderPipeline(typeof(Light), typeof(CustomRenderPipelineAsset))]
-class CustomLightEditor : LightEditor {
+public class CustomLightEditor : LightEditor {
 
 	public override void OnInspectorGUI() {
 		base.OnInspectorGUI();
