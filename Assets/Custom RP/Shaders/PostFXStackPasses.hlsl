@@ -108,7 +108,7 @@ float4 BloomPrefilterFirefliesPassFragment (Varyings input) : SV_TARGET {
 	};
 	for (int i = 0; i < 5; i++) {
 		float3 c =
-			GetSource(input.fxUV + offsets[i] * GetSourceTexelSize() * 2.0).rgb;
+			GetSource(input.fxUV + offsets[i] * GetSourceTexelSize().xy * 2.0).rgb;
 		c = ApplyBloomThreshold(c);
 		float w = 1.0 / (Luminance(c) + 1.0);
 		color += c * w;
