@@ -99,14 +99,11 @@ public class Shadows {
 	}
 
 	public void Cleanup () {
-		if (shadowedDirLightCount > 0) {
-			buffer.ReleaseTemporaryRT(dirShadowAtlasId);
-			ExecuteBuffer();
-		}
+		buffer.ReleaseTemporaryRT(dirShadowAtlasId);
 		if (shadowedOtherLightCount > 0) {
 			buffer.ReleaseTemporaryRT(otherShadowAtlasId);
-			ExecuteBuffer();
 		}
+		ExecuteBuffer();
 	}
 
 	public Vector4 ReserveDirectionalShadows (
@@ -190,9 +187,19 @@ public class Shadows {
 		if (shadowedDirLightCount > 0) {
 			RenderDirectionalShadows();
 		}
+		else {
+			buffer.GetTemporaryRT(
+				dirShadowAtlasId, 1, 1,
+				32, FilterMode.Bilinear, RenderTextureFormat.Shadowmap
+			);
+		}
 		if (shadowedOtherLightCount > 0) {
 			RenderOtherShadows();
 		}
+		else {
+			buffer.SetGlobalTexture(otherShadowAtlasId, dirShadowAtlasId);
+		}
+
 		buffer.BeginSample(bufferName);
 		SetKeywords(shadowMaskKeywords, useShadowMask ?
 			QualitySettings.shadowmaskMode == ShadowmaskMode.Shadowmask ? 0 : 1 :
