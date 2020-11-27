@@ -39,7 +39,7 @@ public class Shadows {
 		cascadeCountId = Shader.PropertyToID("_CascadeCount"),
 		cascadeCullingSpheresId = Shader.PropertyToID("_CascadeCullingSpheres"),
 		cascadeDataId = Shader.PropertyToID("_CascadeData"),
-		shadowAtlastSizeId = Shader.PropertyToID("_ShadowAtlasSize"),
+		shadowAtlasSizeId = Shader.PropertyToID("_ShadowAtlasSize"),
 		shadowDistanceFadeId = Shader.PropertyToID("_ShadowDistanceFade"),
 		shadowPancakingId = Shader.PropertyToID("_ShadowPancaking");
 
@@ -216,7 +216,7 @@ public class Shadows {
 				1f / (1f - f * f)
 			)
 		);
-		buffer.SetGlobalVector(shadowAtlastSizeId, atlasSizes);
+		buffer.SetGlobalVector(shadowAtlasSizeId, atlasSizes);
 		buffer.EndSample(bufferName);
 		ExecuteBuffer();
 	}
