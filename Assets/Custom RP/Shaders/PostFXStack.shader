@@ -1,4 +1,4 @@
-﻿Shader "Custom RP/Post FX Stack" {
+﻿Shader "Hidden/Custom RP/Post FX Stack" {
 	
 	SubShader {
 		Cull Off
@@ -91,7 +91,7 @@
 		}
 		
 		Pass {
-			Name "Tone Mapping None"
+			Name "Color Grading None"
 			
 			HLSLPROGRAM
 				#pragma target 3.5
@@ -101,7 +101,7 @@
 		}
 
 		Pass {
-			Name "Tone Mapping ACES"
+			Name "Color Grading ACES"
 			
 			HLSLPROGRAM
 				#pragma target 3.5
@@ -111,7 +111,7 @@
 		}
 
 		Pass {
-			Name "Tone Mapping Neutral"
+			Name "Color Grading Neutral"
 			
 			HLSLPROGRAM
 				#pragma target 3.5
@@ -121,7 +121,7 @@
 		}
 		
 		Pass {
-			Name "Tone Mapping Reinhard"
+			Name "Color Grading Reinhard"
 			
 			HLSLPROGRAM
 				#pragma target 3.5

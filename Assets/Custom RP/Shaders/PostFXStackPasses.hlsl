@@ -14,24 +14,24 @@ float4 GetSourceTexelSize () {
 	return _PostFXSource_TexelSize;
 }
 
-float4 GetSource(float2 fxUV) {
-	return SAMPLE_TEXTURE2D(_PostFXSource, sampler_linear_clamp, fxUV);
+float4 GetSource(float2 screenUV) {
+	return SAMPLE_TEXTURE2D(_PostFXSource, sampler_linear_clamp, screenUV);
 }
 
-float4 GetSourceBicubic (float2 fxUV) {
+float4 GetSourceBicubic (float2 screenUV) {
 	return SampleTexture2DBicubic(
-		TEXTURE2D_ARGS(_PostFXSource, sampler_linear_clamp), fxUV,
+		TEXTURE2D_ARGS(_PostFXSource, sampler_linear_clamp), screenUV,
 		_PostFXSource_TexelSize.zwxy, 1.0, 0.0
 	);
 }
 
-float4 GetSource2(float2 fxUV) {
-	return SAMPLE_TEXTURE2D(_PostFXSource2, sampler_linear_clamp, fxUV);
+float4 GetSource2(float2 screenUV) {
+	return SAMPLE_TEXTURE2D(_PostFXSource2, sampler_linear_clamp, screenUV);
 }
 
 struct Varyings {
 	float4 positionCS : SV_POSITION;
-	float2 fxUV : VAR_FX_UV;
+	float2 screenUV : VAR_SCREEN_UV;
 };
 
 Varyings DefaultPassVertex (uint vertexID : SV_VertexID) {
@@ -41,12 +41,12 @@ Varyings DefaultPassVertex (uint vertexID : SV_VertexID) {
 		vertexID == 1 ? 3.0 : -1.0,
 		0.0, 1.0
 	);
-	output.fxUV = float2(
+	output.screenUV = float2(
 		vertexID <= 1 ? 0.0 : 2.0,
 		vertexID == 1 ? 2.0 : 0.0
 	);
 	if (_ProjectionParams.x < 0.0) {
-		output.fxUV.y = 1.0 - output.fxUV.y;
+		output.screenUV.y = 1.0 - output.screenUV.y;
 	}
 	return output;
 }
@@ -57,12 +57,12 @@ float _BloomIntensity;
 float4 BloomAddPassFragment (Varyings input) : SV_TARGET {
 	float3 lowRes;
 	if (_BloomBicubicUpsampling) {
-		lowRes = GetSourceBicubic(input.fxUV).rgb;
+		lowRes = GetSourceBicubic(input.screenUV).rgb;
 	}
 	else {
-		lowRes = GetSource(input.fxUV).rgb;
+		lowRes = GetSource(input.screenUV).rgb;
 	}
-	float3 highRes = GetSource2(input.fxUV).rgb;
+	float3 highRes = GetSource2(input.screenUV).rgb;
 	return float4(lowRes * _BloomIntensity + highRes, 1.0);
 }
 
@@ -77,7 +77,7 @@ float4 BloomHorizontalPassFragment (Varyings input) : SV_TARGET {
 	};
 	for (int i = 0; i < 9; i++) {
 		float offset = offsets[i] * 2.0 * GetSourceTexelSize().x;
-		color += GetSource(input.fxUV + float2(offset, 0.0)).rgb * weights[i];
+		color += GetSource(input.screenUV + float2(offset, 0.0)).rgb * weights[i];
 	}
 	return float4(color, 1.0);
 }
@@ -95,7 +95,7 @@ float3 ApplyBloomThreshold (float3 color) {
 }
 
 float4 BloomPrefilterPassFragment (Varyings input) : SV_TARGET {
-	float3 color = ApplyBloomThreshold(GetSource(input.fxUV).rgb);
+	float3 color = ApplyBloomThreshold(GetSource(input.screenUV).rgb);
 	return float4(color, 1.0);
 }
 
@@ -108,7 +108,7 @@ float4 BloomPrefilterFirefliesPassFragment (Varyings input) : SV_TARGET {
 	};
 	for (int i = 0; i < 5; i++) {
 		float3 c =
-			GetSource(input.fxUV + offsets[i] * GetSourceTexelSize().xy * 2.0).rgb;
+			GetSource(input.screenUV + offsets[i] * GetSourceTexelSize().xy * 2.0).rgb;
 		c = ApplyBloomThreshold(c);
 		float w = 1.0 / (Luminance(c) + 1.0);
 		color += c * w;
@@ -121,24 +121,24 @@ float4 BloomPrefilterFirefliesPassFragment (Varyings input) : SV_TARGET {
 float4 BloomScatterPassFragment (Varyings input) : SV_TARGET {
 	float3 lowRes;
 	if (_BloomBicubicUpsampling) {
-		lowRes = GetSourceBicubic(input.fxUV).rgb;
+		lowRes = GetSourceBicubic(input.screenUV).rgb;
 	}
 	else {
-		lowRes = GetSource(input.fxUV).rgb;
+		lowRes = GetSource(input.screenUV).rgb;
 	}
-	float3 highRes = GetSource2(input.fxUV).rgb;
+	float3 highRes = GetSource2(input.screenUV).rgb;
 	return float4(lerp(highRes, lowRes, _BloomIntensity), 1.0);
 }
 
 float4 BloomScatterFinalPassFragment (Varyings input) : SV_TARGET {
 	float3 lowRes;
 	if (_BloomBicubicUpsampling) {
-		lowRes = GetSourceBicubic(input.fxUV).rgb;
+		lowRes = GetSourceBicubic(input.screenUV).rgb;
 	}
 	else {
-		lowRes = GetSource(input.fxUV).rgb;
+		lowRes = GetSource(input.screenUV).rgb;
 	}
-	float3 highRes = GetSource2(input.fxUV).rgb;
+	float3 highRes = GetSource2(input.screenUV).rgb;
 	lowRes += highRes - ApplyBloomThreshold(highRes);
 	return float4(lerp(highRes, lowRes, _BloomIntensity), 1.0);
 }
@@ -153,13 +153,13 @@ float4 BloomVerticalPassFragment (Varyings input) : SV_TARGET {
 	};
 	for (int i = 0; i < 5; i++) {
 		float offset = offsets[i] * GetSourceTexelSize().y;
-		color += GetSource(input.fxUV + float2(0.0, offset)).rgb * weights[i];
+		color += GetSource(input.screenUV + float2(0.0, offset)).rgb * weights[i];
 	}
 	return float4(color, 1.0);
 }
 
 float4 CopyPassFragment (Varyings input) : SV_TARGET {
-	return GetSource(input.fxUV);
+	return GetSource(input.screenUV);
 }
 
 float4 _ColorAdjustments;
@@ -258,24 +258,24 @@ float3 GetColorGradedLUT (float2 uv, bool useACES = false) {
 }
 
 float4 ColorGradingNonePassFragment (Varyings input) : SV_TARGET {
-	float3 color = GetColorGradedLUT(input.fxUV);
+	float3 color = GetColorGradedLUT(input.screenUV);
 	return float4(color, 1.0);
 }
 
 float4 ColorGradingACESPassFragment (Varyings input) : SV_TARGET {
-	float3 color = GetColorGradedLUT(input.fxUV, true);
+	float3 color = GetColorGradedLUT(input.screenUV, true);
 	color = AcesTonemap(color);
 	return float4(color, 1.0);
 }
 
 float4 ColorGradingNeutralPassFragment (Varyings input) : SV_TARGET {
-	float3 color = GetColorGradedLUT(input.fxUV);
+	float3 color = GetColorGradedLUT(input.screenUV);
 	color = NeutralTonemap(color);
 	return float4(color, 1.0);
 }
 
 float4 ColorGradingReinhardPassFragment (Varyings input) : SV_TARGET {
-	float3 color = GetColorGradedLUT(input.fxUV);
+	float3 color = GetColorGradedLUT(input.screenUV);
 	color /= color + 1.0;
 	return float4(color, 1.0);
 }
@@ -291,7 +291,7 @@ float3 ApplyColorGradingLUT (float3 color) {
 }
 
 float4 FinalPassFragment (Varyings input) : SV_TARGET {
-	float4 color = GetSource(input.fxUV);
+	float4 color = GetSource(input.screenUV);
 	color.rgb = ApplyColorGradingLUT(color.rgb);
 	return color;
 }
