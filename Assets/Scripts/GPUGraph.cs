@@ -7,7 +7,6 @@ public class GPUGraph : MonoBehaviour {
 	static readonly int
 		positionsId = Shader.PropertyToID("_Positions"),
 		resolutionId = Shader.PropertyToID("_Resolution"),
-		scaleId = Shader.PropertyToID("_Scale"),
 		stepId = Shader.PropertyToID("_Step"),
 		timeId = Shader.PropertyToID("_Time"),
 		transitionProgressId = Shader.PropertyToID("_TransitionProgress");
@@ -97,7 +96,7 @@ public class GPUGraph : MonoBehaviour {
 		computeShader.Dispatch(kernelIndex, groups, groups, 1);
 
 		material.SetBuffer(positionsId, positionsBuffer);
-		material.SetVector(scaleId, new Vector4(step, 1f / step));
+		material.SetFloat(stepId, step);
 		var bounds = new Bounds(Vector3.zero, Vector3.one * (2f + 2f / resolution));
 		Graphics.DrawMeshInstancedProcedural(
 			mesh, 0, material, bounds, resolution * resolution
