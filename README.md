@@ -1,6 +1,6 @@
 # Basics 06: Jobs
 
-[This is the fifth tutorial in a series about learning the basics of working with Unity.](https://catlikecoding.com/unity/tutorials/basics/jobs/) This time we'll create an animating fractal. We begin with a regular game object hierarchy and then slowly transition to the jobs system, measuring performance along the way.
+[This is the sixth tutorial in a series about learning the basics of working with Unity.](https://catlikecoding.com/unity/tutorials/basics/jobs/) This time we'll create an animating fractal. We begin with a regular game object hierarchy and then slowly transition to the jobs system, measuring performance along the way.
 
 ## License
 
