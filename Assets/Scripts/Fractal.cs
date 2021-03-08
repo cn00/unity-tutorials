@@ -154,7 +154,6 @@ public class Fractal : MonoBehaviour {
 		jobHandle.Complete();
 
 		var bounds = new Bounds(rootPart.worldPosition, 3f * objectScale * Vector3.one);
-		bounds.extents = Vector3.one * 0.5f;
 		for (int i = 0; i < matricesBuffers.Length; i++) {
 			ComputeBuffer buffer = matricesBuffers[i];
 			buffer.SetData(matrices[i]);
