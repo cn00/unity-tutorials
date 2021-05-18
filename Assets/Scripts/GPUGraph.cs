@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class GPUGraph : MonoBehaviour {
 
@@ -12,24 +12,24 @@ public class GPUGraph : MonoBehaviour {
 		transitionProgressId = Shader.PropertyToID("_TransitionProgress");
 
 	[SerializeField]
-	ComputeShader computeShader = default;
+	ComputeShader computeShader;
 
 	[SerializeField]
-	Material material = default;
+	Material material;
 
 	[SerializeField]
-	Mesh mesh = default;
+	Mesh mesh;
 
 	[SerializeField, Range(10, maxResolution)]
 	int resolution = 10;
 
 	[SerializeField]
-	FunctionLibrary.FunctionName function = default;
+	FunctionLibrary.FunctionName function;
 
 	public enum TransitionMode { Cycle, Random }
 
 	[SerializeField]
-	TransitionMode transitionMode = TransitionMode.Cycle;
+	TransitionMode transitionMode;
 
 	[SerializeField, Min(0f)]
 	float functionDuration = 1f, transitionDuration = 1f;
@@ -87,7 +87,8 @@ public class GPUGraph : MonoBehaviour {
 			);
 		}
 
-		var kernelIndex = (int)function +
+		var kernelIndex =
+			(int)function +
 			(int)(transitioning ? transitionFunction : function) *
 			FunctionLibrary.FunctionCount;
 		computeShader.SetBuffer(kernelIndex, positionsId, positionsBuffer);

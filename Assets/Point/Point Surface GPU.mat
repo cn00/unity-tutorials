@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Point Surface GPU
-  m_Shader: {fileID: 4800000, guid: 64d1a809ff95b4242901e45b2a00afad, type: 3}
+  m_Shader: {fileID: 4800000, guid: 35f33e760ed4c450589a4ee53000f69b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -76,3 +76,4 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []

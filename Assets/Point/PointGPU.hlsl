@@ -1,4 +1,4 @@
-﻿#if defined(UNITY_PROCEDURAL_INSTANCING_ENABLED)
+#if defined(UNITY_PROCEDURAL_INSTANCING_ENABLED)
 	StructuredBuffer<float3> _Positions;
 #endif
 

@@ -1,4 +1,4 @@
-﻿#pragma kernel WaveKernel
+#pragma kernel WaveKernel
 #pragma kernel WaveToMultiWaveKernel
 #pragma kernel WaveToRippleKernel
 #pragma kernel WaveToSphereKernel
