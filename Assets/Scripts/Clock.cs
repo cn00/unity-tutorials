@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class Clock : MonoBehaviour {
@@ -6,7 +6,7 @@ public class Clock : MonoBehaviour {
 	const float hoursToDegrees = -30f, minutesToDegrees = -6f, secondsToDegrees = -6f;
 
 	[SerializeField]
-	Transform hoursPivot = default, minutesPivot = default, secondsPivot = default;
+	Transform hoursPivot, minutesPivot, secondsPivot;
 
 	void Update () {
 		TimeSpan time = DateTime.Now.TimeOfDay;
