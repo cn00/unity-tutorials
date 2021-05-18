@@ -1,4 +1,4 @@
-﻿using Unity.Burst;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -32,7 +32,7 @@ public class Fractal : MonoBehaviour {
 			);
 			part.worldPosition =
 				parent.worldPosition +
-				mul(parent.worldRotation, (1.5f * scale * part.direction));
+				mul(parent.worldRotation, 1.5f * scale * part.direction);
 			parts[i] = part;
 
 			float3x3 r = float3x3(part.worldRotation) * scale;
@@ -48,8 +48,6 @@ public class Fractal : MonoBehaviour {
 
 	static readonly int matricesId = Shader.PropertyToID("_Matrices");
 
-	static MaterialPropertyBlock propertyBlock;
-
 	static float3[] directions = {
 		up(), right(), left(), forward(), back()
 	};
@@ -60,14 +58,16 @@ public class Fractal : MonoBehaviour {
 		quaternion.RotateX(0.5f * PI), quaternion.RotateX(-0.5f * PI)
 	};
 
+	static MaterialPropertyBlock propertyBlock;
+
 	[SerializeField, Range(1, 8)]
 	int depth = 4;
 
 	[SerializeField]
-	Mesh mesh = default;
+	Mesh mesh;
 
 	[SerializeField]
-	Material material = default;
+	Material material;
 
 	NativeArray<FractalPart>[] parts;
 
@@ -96,9 +96,7 @@ public class Fractal : MonoBehaviour {
 			}
 		}
 
-		if (propertyBlock == null) {
-			propertyBlock = new MaterialPropertyBlock();
-		}
+		propertyBlock ??= new MaterialPropertyBlock();
 	}
 
 	void OnDisable () {
@@ -119,12 +117,10 @@ public class Fractal : MonoBehaviour {
 		}
 	}
 
-	FractalPart CreatePart (int childIndex) {
-		return new FractalPart {
-			direction = directions[childIndex],
-			rotation = rotations[childIndex]
-		};
-	}
+	FractalPart CreatePart (int childIndex) => new FractalPart {
+		direction = directions[childIndex],
+		rotation = rotations[childIndex]
+	};
 
 	void Update () {
 		float spinAngleDelta = 0.125f * PI * Time.deltaTime;
