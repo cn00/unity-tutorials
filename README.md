@@ -1,6 +1,6 @@
 # Basics 04: Measuring Performance
 
-[This is the fourth tutorial in a series about learning the basics of working with Unity.](https://catlikecoding.com/unity/tutorials/basics/measuring-performance/) It's an introduction to measuring performance. We'll also add the ability to morph from function one to another to our function library.
+[This is the fourth tutorial in a series about learning the basics of working with Unity.](https://catlikecoding.com/unity/tutorials/basics/measuring-performance/) It's an introduction to measuring performance. We'll also add the ability to morph functions to our function library.
 
 ## License
 

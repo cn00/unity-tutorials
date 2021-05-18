@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Graph : MonoBehaviour {
 
 	[SerializeField]
-	Transform pointPrefab = default;
+	Transform pointPrefab;
 
 	[SerializeField, Range(10, 100)]
 	int resolution = 10;
 
 	[SerializeField]
-	FunctionLibrary.FunctionName function = default;
+	FunctionLibrary.FunctionName function;
 
 	public enum TransitionMode { Cycle, Random }
 
 	[SerializeField]
-	TransitionMode transitionMode = TransitionMode.Cycle;
+	TransitionMode transitionMode;
 
 	[SerializeField, Min(0f)]
 	float functionDuration = 1f, transitionDuration = 1f;
@@ -32,10 +32,9 @@ public class Graph : MonoBehaviour {
 		var scale = Vector3.one * step;
 		points = new Transform[resolution * resolution];
 		for (int i = 0; i < points.Length; i++) {
-			Transform point = Instantiate(pointPrefab);
+			Transform point = points[i] = Instantiate(pointPrefab);
 			point.localScale = scale;
 			point.SetParent(transform, false);
-			points[i] = point;
 		}
 	}
 
