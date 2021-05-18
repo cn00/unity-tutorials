@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Graph : MonoBehaviour {
 
 	[SerializeField]
-	Transform pointPrefab = default;
+	Transform pointPrefab;
 
 	[SerializeField, Range(10, 100)]
 	int resolution = 10;
@@ -12,16 +12,15 @@ public class Graph : MonoBehaviour {
 
 	void Awake () {
 		float step = 2f / resolution;
-		var scale = Vector3.one * step;
 		var position = Vector3.zero;
+		var scale = Vector3.one * step;
 		points = new Transform[resolution];
 		for (int i = 0; i < points.Length; i++) {
-			Transform point = Instantiate(pointPrefab);
+			Transform point = points[i] = Instantiate(pointPrefab);
 			position.x = (i + 0.5f) * step - 1f;
 			point.localPosition = position;
 			point.localScale = scale;
 			point.SetParent(transform, false);
-			points[i] = point;
 		}
 	}
 
