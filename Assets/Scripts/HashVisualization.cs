@@ -53,13 +53,13 @@ public class HashVisualization : MonoBehaviour {
 		configId = Shader.PropertyToID("_Config");
 
 	[SerializeField]
-	Mesh instanceMesh = default;
+	Mesh instanceMesh;
 
 	[SerializeField]
-	Material material = default;
+	Material material;
 
 	[SerializeField]
-	Shape shape = Shape.Plane;
+	Shape shape;
 
 	[SerializeField, Range(0.1f, 10f)]
 	float instanceScale = 2f;
@@ -71,7 +71,7 @@ public class HashVisualization : MonoBehaviour {
 	float displacement = 0.1f;
 
 	[SerializeField]
-	int seed = 0;
+	int seed;
 
 	[SerializeField]
 	SpaceTRS domain = new SpaceTRS {
@@ -119,6 +119,8 @@ public class HashVisualization : MonoBehaviour {
 		positionsBuffer.Release();
 		normalsBuffer.Release();
 		hashesBuffer = null;
+		positionsBuffer = null;
+		normalsBuffer = null;
 	}
 
 	void OnValidate () {
