@@ -34,10 +34,10 @@ public class HashVisualization : MonoBehaviour {
 		configId = Shader.PropertyToID("_Config");
 
 	[SerializeField]
-	Mesh instanceMesh = default;
+	Mesh instanceMesh;
 
 	[SerializeField]
-	Material material = default;
+	Material material;
 
 	[SerializeField, Range(1, 512)]
 	int resolution = 16;
@@ -46,7 +46,7 @@ public class HashVisualization : MonoBehaviour {
 	float verticalOffset = 1f;
 
 	[SerializeField]
-	int seed = 0;
+	int seed;
 
 	NativeArray<uint> hashes;
 
