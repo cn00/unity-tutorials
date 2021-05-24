@@ -131,7 +131,7 @@ public class HashVisualization : MonoBehaviour {
 	}
 
 	void Update () {
-		if (true || isDirty || transform.hasChanged) {
+		if (isDirty || transform.hasChanged) {
 			isDirty = false;
 			transform.hasChanged = false;
 
