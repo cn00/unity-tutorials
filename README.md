@@ -1,6 +1,6 @@
 # Pseudorandom Noise 03: Value Noise
 
-[This is the second tutorial in a series about pseudorandom noise.](https://catlikecoding.com/unity/tutorials/pseudorandom-noise/value-noise/) It covers the transition from pure hashing to the simplest form of lattice noise.
+[This is the third tutorial in a series about pseudorandom noise.](https://catlikecoding.com/unity/tutorials/pseudorandom-noise/value-noise/) It covers the transition from pure hashing to the simplest form of lattice noise.
 
 ## License
 
