@@ -98,9 +98,9 @@ public class HashVisualization : MonoBehaviour {
 		hashes = new NativeArray<uint4>(length, Allocator.Persistent);
 		positions = new NativeArray<float3x4>(length, Allocator.Persistent);
 		normals = new NativeArray<float3x4>(length, Allocator.Persistent);
-		hashesBuffer = new ComputeBuffer(length, 4 * 4);
-		positionsBuffer = new ComputeBuffer(length, 3 * 4 * 4);
-		normalsBuffer = new ComputeBuffer(length, 3 * 4 * 4);
+		hashesBuffer = new ComputeBuffer(length * 4, 4);
+		positionsBuffer = new ComputeBuffer(length * 4, 3 * 4);
+		normalsBuffer = new ComputeBuffer(length * 4, 3 * 4);
 
 		propertyBlock ??= new MaterialPropertyBlock();
 		propertyBlock.SetBuffer(hashesId, hashesBuffer);
@@ -146,9 +146,9 @@ public class HashVisualization : MonoBehaviour {
 				domainTRS = domain.Matrix
 			}.ScheduleParallel(hashes.Length, resolution, handle).Complete();
 
-			hashesBuffer.SetData(hashes);
-			positionsBuffer.SetData(positions);
-			normalsBuffer.SetData(normals);
+			hashesBuffer.SetData(hashes.Reinterpret<uint>(4 * 4));
+			positionsBuffer.SetData(positions.Reinterpret<float3>(3 * 4 * 4));
+			normalsBuffer.SetData(normals.Reinterpret<float3>(3 * 4 * 4));
 
 			bounds = new Bounds(
 				transform.position,
