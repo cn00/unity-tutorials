@@ -50,7 +50,7 @@ public class HashVisualization : Visualization {
 		int dataLength, MaterialPropertyBlock propertyBlock
 	) {
 		hashes = new NativeArray<uint4>(dataLength, Allocator.Persistent);
-		hashesBuffer = new ComputeBuffer(dataLength, 4 * 4);
+		hashesBuffer = new ComputeBuffer(dataLength * 4, 4);
 		propertyBlock.SetBuffer(hashesId, hashesBuffer);
 	}
 
@@ -70,6 +70,6 @@ public class HashVisualization : Visualization {
 			domainTRS = domain.Matrix
 		}.ScheduleParallel(hashes.Length, resolution, handle).Complete();
 
-		hashesBuffer.SetData(hashes);
+		hashesBuffer.SetData(hashes.Reinterpret<uint>(4 * 4));
 	}
 }

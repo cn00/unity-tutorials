@@ -71,7 +71,7 @@ public class NoiseVisualization : Visualization {
 		int dataLength, MaterialPropertyBlock propertyBlock
 	) {
 		noise = new NativeArray<float4>(dataLength, Allocator.Persistent);
-		noiseBuffer = new ComputeBuffer(dataLength, 4 * 4);
+		noiseBuffer = new ComputeBuffer(dataLength * 4, 4);
 		propertyBlock.SetBuffer(noiseId, noiseBuffer);
 	}
 
@@ -87,6 +87,6 @@ public class NoiseVisualization : Visualization {
 		noiseJobs[(int)type, 2 * dimensions - (tiling ? 1 : 2)](
 			positions, noise, noiseSettings, domain, resolution, handle
 		).Complete();
-		noiseBuffer.SetData(noise);
+		noiseBuffer.SetData(noise.Reinterpret<float>(4 * 4));
 	}
 }
