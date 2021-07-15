@@ -55,8 +55,8 @@ public abstract class Visualization : MonoBehaviour {
 		length = length / 4 + (length & 1);
 		positions = new NativeArray<float3x4>(length, Allocator.Persistent);
 		normals = new NativeArray<float3x4>(length, Allocator.Persistent);
-		positionsBuffer = new ComputeBuffer(length, 3 * 4 * 4);
-		normalsBuffer = new ComputeBuffer(length, 3 * 4 * 4);
+		positionsBuffer = new ComputeBuffer(length * 4, 3 * 4);
+		normalsBuffer = new ComputeBuffer(length * 4, 3 * 4);
 
 		propertyBlock ??= new MaterialPropertyBlock();
 		EnableVisualization(length, propertyBlock);
@@ -96,8 +96,8 @@ public abstract class Visualization : MonoBehaviour {
 				)
 			);
 
-			positionsBuffer.SetData(positions);
-			normalsBuffer.SetData(normals);
+			positionsBuffer.SetData(positions.Reinterpret<float3>(3 * 4 * 4));
+			normalsBuffer.SetData(normals.Reinterpret<float3>(3 * 4 * 4));
 
 			bounds = new Bounds(
 				transform.position,
