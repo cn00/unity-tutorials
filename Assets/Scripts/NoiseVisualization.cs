@@ -19,9 +19,9 @@ public class NoiseVisualization : Visualization {
 		{
 			Job<Lattice1D<LatticeNormal, Turbulence<Perlin>>>.ScheduleParallel,
 			Job<Lattice1D<LatticeTiling, Turbulence<Perlin>>>.ScheduleParallel,
+			Job<Lattice2D<LatticeNormal, Turbulence<Perlin>>>.ScheduleParallel,
 			Job<Lattice2D<LatticeTiling, Turbulence<Perlin>>>.ScheduleParallel,
-			Job<Lattice2D<LatticeTiling, Turbulence<Perlin>>>.ScheduleParallel,
-			Job<Lattice3D<LatticeTiling, Turbulence<Perlin>>>.ScheduleParallel,
+			Job<Lattice3D<LatticeNormal, Turbulence<Perlin>>>.ScheduleParallel,
 			Job<Lattice3D<LatticeTiling, Turbulence<Perlin>>>.ScheduleParallel
 		},
 		{
