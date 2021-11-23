@@ -1,6 +1,6 @@
 # Procedural Meshes 02: Square Grid
 
-[This is the second tutorial in a series about procedural meshes.](https://catlikecoding.com/unity/tutorials/procedural-meshes/creating-a-mesh/) The [previous tutorial](https://catlikecoding.com/unity/tutorials/procedural-meshes/creating-a-mesh/) introduced the advanced Mesh API. This time we'll use that API to make a Burst job that generates a square grid consisting of multiple quads.
+[This is the second tutorial in a series about procedural meshes.](https://catlikecoding.com/unity/tutorials/procedural-meshes/square-grid/) The [previous tutorial](https://catlikecoding.com/unity/tutorials/procedural-meshes/creating-a-mesh/) introduced the advanced Mesh API. This time we'll use that API to make a Burst job that generates a square grid consisting of multiple quads.
 
 ## License
 
