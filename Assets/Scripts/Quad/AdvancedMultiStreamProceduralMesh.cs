@@ -72,7 +72,7 @@ public class AdvancedMultiStreamProceduralMesh : MonoBehaviour {
 
 		var mesh = new Mesh {
 			bounds = bounds,
-			name = "Prodecedural Mesh"
+			name = "Procedural Mesh"
 		};
 		Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
 		GetComponent<MeshFilter>().mesh = mesh;
