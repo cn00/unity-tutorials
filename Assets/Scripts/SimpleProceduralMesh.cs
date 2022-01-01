@@ -5,7 +5,7 @@ public class SimpleProceduralMesh : MonoBehaviour {
 
 	void OnEnable () {
 		var mesh = new Mesh {
-			name = "Prodecedural Mesh"
+			name = "Procedural Mesh"
 		};
 
 		mesh.vertices = new Vector3[] {

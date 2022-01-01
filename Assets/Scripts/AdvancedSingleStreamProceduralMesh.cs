@@ -84,7 +84,7 @@ public class AdvancedSingleStreamProceduralMesh : MonoBehaviour {
 
 		var mesh = new Mesh {
 			bounds = bounds,
-			name = "Prodecedural Mesh"
+			name = "Procedural Mesh"
 		};
 		Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
 		
