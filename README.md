@@ -1,6 +1,6 @@
 # Procedural Meshes 05: UV Sphere
 
-[This is the fifth tutorial in a series about procedural meshes.](https://catlikecoding.com/unity/tutorials/procedural-meshes/triangle-grid/) This time we bend and deform a square grid to create a sphere.
+[This is the fifth tutorial in a series about procedural meshes.](https://catlikecoding.com/unity/tutorials/procedural-meshes/uv-sphere/) This time we bend and deform a square grid to create a sphere.
 
 ## License
 
