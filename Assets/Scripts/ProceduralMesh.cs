@@ -13,7 +13,7 @@ public class ProceduralMesh : MonoBehaviour {
 		MeshJob<SharedTriangleGrid, SingleStream>.ScheduleParallel,
 		MeshJob<FlatHexagonGrid, SingleStream>.ScheduleParallel,
 		MeshJob<PointyHexagonGrid, SingleStream>.ScheduleParallel,
-		MeshJob<UVSphere, SingleStream>.ScheduleParallel,
+		MeshJob<UVSphere, SingleStream>.ScheduleParallel
 	};
 
 	public enum MeshType {
