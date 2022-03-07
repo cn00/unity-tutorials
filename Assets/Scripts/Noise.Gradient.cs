@@ -14,7 +14,7 @@ public static partial class Noise {
 		float4 EvaluateAfterInterpolation (float4 value);
 	}
 
-	public struct Turbulence<G> : IGradient where G : IGradient {
+	public struct Turbulence<G> : IGradient where G : struct, IGradient {
 
 		public float4 Evaluate (SmallXXHash4 hash, float4 x) =>
 			default(G).Evaluate(hash, x);
