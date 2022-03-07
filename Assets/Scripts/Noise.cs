@@ -80,6 +80,6 @@ public static partial class Noise {
 
 	public delegate JobHandle ScheduleDelegate (
 		NativeArray<float3x4> positions, NativeArray<float4> noise,
-		Settings settings, SpaceTRS trs, int resolution, JobHandle dependency
+		Settings settings, SpaceTRS domainTRS, int resolution, JobHandle dependency
 	);
 }
