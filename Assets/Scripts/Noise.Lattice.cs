@@ -40,7 +40,7 @@ public static partial class Noise {
 			span.g0 = coordinates - span.p0;
 			span.g1 = span.g0 - 1f;
 
-			span.p0 -= (int4)(points / frequency) * frequency;
+			span.p0 -= (int4)ceil(points / frequency) * frequency;
 			span.p0 = select(span.p0, span.p0 + frequency, span.p0 < 0);
 			span.p1 = span.p0 + 1;
 			span.p1 = select(span.p1, 0, span.p1 == frequency);
