@@ -102,7 +102,6 @@ public static partial class Noise {
 				),
 				x.t
 			);
-			//) * 2f - 1f;
 		}
 	}
 }
