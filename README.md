@@ -1,6 +1,6 @@
 # Procedural Meshes 07: Seamless Cube Sphere
 
-[This is the seventh tutorial in a series about procedural meshes.](https://catlikecoding.com/unity/tutorials/procedural-meshes/seamless-cube-sphere/) This time we create a cube sphere with shares vertices, without any seams.
+[This is the seventh tutorial in a series about procedural meshes.](https://catlikecoding.com/unity/tutorials/procedural-meshes/seamless-cube-sphere/) This time we create a cube sphere with shared vertices, without any seams.
 
 ## License
 
