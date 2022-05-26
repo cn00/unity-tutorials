@@ -10,7 +10,7 @@ namespace ProceduralMeshes.Generators {
 		public Bounds Bounds => new Bounds(Vector3.zero, new Vector3(
 			0.75f + 0.25f / Resolution,
 			0f,
-			(Resolution > 1 ? 0.75f / Resolution : 0.5f) * sqrt(3f)
+			(Resolution > 1 ? 0.5f + 0.25f / Resolution : 0.5f) * sqrt(3f)
 		));
 
 		public int VertexCount => 7 * Resolution * Resolution;
