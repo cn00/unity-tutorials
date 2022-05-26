@@ -8,7 +8,7 @@ namespace ProceduralMeshes.Generators {
 	public struct PointyHexagonGrid : IMeshGenerator {
 
 		public Bounds Bounds => new Bounds(Vector3.zero, new Vector3(
-			(Resolution > 1 ? 0.75f / Resolution : 0.5f) * sqrt(3f),
+			(Resolution > 1 ? 0.5f + 0.25f / Resolution : 0.5f) * sqrt(3f),
 			0f,
 			0.75f + 0.25f / Resolution
 		));
