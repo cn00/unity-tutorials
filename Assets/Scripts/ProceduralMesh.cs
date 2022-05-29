@@ -123,11 +123,11 @@ public class ProceduralMesh : MonoBehaviour {
 				float c = i * colorStep;
 				Gizmos.color = new Color(c, 0f, c);
 				Gizmos.DrawSphere(
-					t.TransformPoint(
+					t.TransformPoint((
 						vertices[triangles[i]] +
 						vertices[triangles[i + 1]] +
 						vertices[triangles[i + 2]]
-					) * (1f / 3f),
+					) * (1f / 3f)),
 					0.02f
 				);
 			}
