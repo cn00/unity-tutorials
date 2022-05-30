@@ -63,7 +63,7 @@ namespace ProceduralMeshes.Generators {
 			vertex.normal = vertex.position = normalize(columnBottomStart);
 			vertex.tangent.xz = GetTangentXZ(vertex.position);
 			vertex.tangent.w = -1f;
-			vertex.texCoord0 = GetTextCoord(vertex.position);
+			vertex.texCoord0 = GetTexCoord(vertex.position);
 			streams.SetVertex(vi, vertex);
 			vi += 1;
 
@@ -78,7 +78,7 @@ namespace ProceduralMeshes.Generators {
 				}
 				vertex.normal = vertex.position = normalize(vertex.position);
 				vertex.tangent.xz = GetTangentXZ(vertex.position);
-				vertex.texCoord0 = GetTextCoord(vertex.position);
+				vertex.texCoord0 = GetTexCoord(vertex.position);
 				streams.SetVertex(vi, vertex);
 				streams.SetTriangle(ti + 0, quad.xyz);
 				streams.SetTriangle(ti + 1, quad.xzw);
@@ -152,7 +152,7 @@ namespace ProceduralMeshes.Generators {
 
 		static float2 GetTangentXZ (float3 p) => normalize(float2(-p.z, p.x));
 
-		static float2 GetTextCoord (float3 p) {
+		static float2 GetTexCoord (float3 p) {
 			var texCoord = float2(
 				atan2(p.x, p.z) / (-2f * PI) + 0.5f,
 				asin(p.y) / PI + 0.5f
